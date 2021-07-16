@@ -1,12 +1,12 @@
-import indexOf from './algorithm/indexOf'
-import arrayGenerator from './utils/arrayGenerator'
+import { generateRandomArray } from './utils/arrayGenerator'
+import { sortTest } from './utils/sortingHelper'
 
 function main() {
-  const arr = arrayGenerator(100000)
+  const arr = generateRandomArray(100000)
 
-  console.time('计时')
-  indexOf(arr, 16)
-  console.timeEnd('计时')
+  // sortTest('selectionSort', arr)
+  sortTest('insertionSort', arr)
+  console.time('计时 - System Sort')
 }
 
 main()
