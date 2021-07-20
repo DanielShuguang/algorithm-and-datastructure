@@ -4,7 +4,7 @@
  * @param b
  * @returns -1 为 a < b
  */
-function minimum<T>(a: T, b: T) {
+export function minimum<T>(a: T, b: T) {
   if (a < b) {
     return -1
   } else if (a === b) {
@@ -12,5 +12,3 @@ function minimum<T>(a: T, b: T) {
   }
   return 1
 }
-
-export default minimum

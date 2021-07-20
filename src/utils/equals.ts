@@ -4,7 +4,7 @@
  * @param b
  * @returns
  */
-function equals<T>(a: T, b: T) {
+export function equals<T>(a: T, b: T) {
   if (a instanceof Object) {
     return isObjectValueEqual(a, b)
   }
@@ -45,5 +45,3 @@ function isObjectValueEqual<T extends Record<string, any>>(a: T, b: T) {
   }
   return true
 }
-
-export default equals

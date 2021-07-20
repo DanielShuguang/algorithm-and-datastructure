@@ -1,7 +1,7 @@
-import insertionSort from '../algorithm/insertionSort'
-import selectionSort from '../algorithm/selectionSort'
+import { insertionSort } from '../algorithm/insertionSort'
+import { selectionSort } from '../algorithm/selectionSort'
 import { CompareFunc } from '../typings'
-import minimum from './minimum'
+import { minimum } from './minimum'
 
 export type SortType = 'selectionSort' | 'insertionSort'
 

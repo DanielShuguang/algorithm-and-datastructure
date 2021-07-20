@@ -1,4 +1,4 @@
-import equals from '../utils/equals'
+import { equals } from '../utils/equals'
 
 type EqualFn<T> = (a: T, b: T) => boolean
 
@@ -10,9 +10,13 @@ type EqualFn<T> = (a: T, b: T) => boolean
  * @description 时间复杂度 O(n)
  * @returns
  */
-function indexOf<T>(array: T[], target: T, equalFn: EqualFn<T> = equals) {
+export function indexOf<T>(
+  array: T[],
+  target: T,
+  equalFn: EqualFn<T> = equals
+) {
   const length = array.length
-  
+
   for (let i = 0; i < length; i++) {
     if (equalFn(array[i], target)) {
       return i
@@ -20,5 +24,3 @@ function indexOf<T>(array: T[], target: T, equalFn: EqualFn<T> = equals) {
   }
   return -1
 }
-
-export default indexOf

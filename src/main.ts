@@ -1,12 +1,16 @@
-import { generateRandomArray } from './utils/arrayGenerator'
-import { sortTest } from './utils/sortingHelper'
+import { LoopQueue } from './data_structure/queue'
 
 function main() {
-  const arr = generateRandomArray(100000)
+  const queue = new LoopQueue<number>()
+  for (let i = 0; i < 10; i++) {
+    queue.enqueue(i)
+    console.log(queue.toString())
 
-  // sortTest('selectionSort', arr)
-  sortTest('insertionSort', arr)
-  console.time('计时 - System Sort')
+    if (i % 3 === 2) {
+      queue.dequeue()
+      console.log(queue.toString())
+    }
+  }
 }
 
 main()

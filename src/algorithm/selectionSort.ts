@@ -1,6 +1,6 @@
 import { CompareFunc } from '../typings'
-import minimum from '../utils/minimum'
-import swap from '../utils/swap'
+import { minimum } from '../utils/minimum'
+import { swap } from '../utils/swap'
 
 /**
  * 选择排序
@@ -8,7 +8,10 @@ import swap from '../utils/swap'
  * @param compareFn 自定义大小比较函数
  * @description 时间复杂度 O(n^2)
  */
-function selectionSort<T>(array: T[], compareFn: CompareFunc<T> = minimum) {
+export function selectionSort<T>(
+  array: T[],
+  compareFn: CompareFunc<T> = minimum
+) {
   const length = array.length
 
   for (let i = 0; i < length; i++) {
@@ -21,5 +24,3 @@ function selectionSort<T>(array: T[], compareFn: CompareFunc<T> = minimum) {
     swap(array, minIndex, i)
   }
 }
-
-export default selectionSort

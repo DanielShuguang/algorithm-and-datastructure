@@ -1,13 +1,17 @@
 import { CompareFunc } from '../typings'
-import cloneDeep from '../utils/cloneDeep'
-import minimum from '../utils/minimum'
+import { cloneDeep } from '../utils/cloneDeep'
+import { minimum } from '../utils/minimum'
 
 /**
  * 插入排序
  * @param array
  * @param compareFn 自定义大小比较函数
+ * @description 时间复杂度 O(n^2)
  */
-function insertionSort<T>(array: T[], compareFn: CompareFunc<T> = minimum) {
+export function insertionSort<T>(
+  array: T[],
+  compareFn: CompareFunc<T> = minimum
+) {
   const length = array.length
 
   for (let i = 1; i < length; i++) {
@@ -19,5 +23,3 @@ function insertionSort<T>(array: T[], compareFn: CompareFunc<T> = minimum) {
     array[j] = cloneDeep(temp)
   }
 }
-
-export default insertionSort

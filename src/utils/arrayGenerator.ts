@@ -3,7 +3,7 @@
  * @param n 数组长度
  * @returns
  */
-function generateOrderedArray(n: number) {
+export function generateOrderedArray(n: number) {
   const arr: number[] = []
 
   for (let i = 0; i < n; i++) {
@@ -15,15 +15,15 @@ function generateOrderedArray(n: number) {
 
 /**
  * 生成随机整数数组
- * @param n 数组长度
+ * @param len 数组长度
  * @returns
  */
-function generateRandomArray(n: number) {
+export function generateRandomArray(len: number) {
   const arr: number[] = []
-  for (let i = 0; i < n; i++) {
-    arr[i] = Math.floor(Math.random() * n)
+
+  for (let i = 0; i < len; i++) {
+    arr[i] = Math.floor(Math.random() * len)
   }
+
   return arr
 }
-
-export { generateOrderedArray, generateRandomArray }
