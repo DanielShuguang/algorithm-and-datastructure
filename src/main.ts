@@ -1,7 +1,8 @@
-import { LoopQueue } from './data_structure/queue'
+import { LinkedListQueue } from './data_structure/queue'
 
 function main() {
-  const queue = new LoopQueue<number>()
+  const queue = new LinkedListQueue<number>()
+
   for (let i = 0; i < 10; i++) {
     queue.enqueue(i)
     console.log(queue.toString())

@@ -1,8 +1,8 @@
-interface Queue<T> {
-  /** 队列元素个数 */
-  getSize(): number
-  /** 判空 */
-  isEmpty(): boolean
+import { DataStruct } from '../typings'
+import { LinkedNode } from './linkedList'
+import { ArrayStack } from './stack'
+
+interface Queue<T> extends DataStruct {
   /** 入队操作 */
   enqueue(e: T): void
   /** 出队操作 */
@@ -11,6 +11,7 @@ interface Queue<T> {
   getFront(): T | undefined
 }
 
+/** 数组队列 */
 export class ArrayQueue<T> implements Queue<T> {
   private array: T[]
 
@@ -40,9 +41,10 @@ export class ArrayQueue<T> implements Queue<T> {
 
   toString = () => {
     let res = 'Queue: front ['
+    const len = this.getSize()
     this.array.forEach((item, i) => {
       res += item
-      if (i !== this.getSize() - 1) {
+      if (i !== len - 1) {
         res += ', '
       }
     })
@@ -51,6 +53,7 @@ export class ArrayQueue<T> implements Queue<T> {
   }
 }
 
+/** 环形队列 */
 export class LoopQueue<T> implements Queue<T> {
   private data: T[]
   private front: number
@@ -77,18 +80,20 @@ export class LoopQueue<T> implements Queue<T> {
   }
 
   enqueue = (e: T) => {
+    const capacity = this.getCapacity()
     if ((this.tail + 1) % this.data.length === this.front) {
-      this.resize(this.getCapacity() * 2)
+      this.resize(capacity * 2)
     }
     this.data[this.tail] = e
-    this.tail = (this.tail + 1) % this.getCapacity()
+    this.tail = (this.tail + 1) % capacity
     this.size++
   }
 
   private resize = (newCapacity: number) => {
     const newData = new Array<T>(newCapacity + 1)
+    const capacity = this.getCapacity()
     for (let i = 0; i < this.size; i++) {
-      newData[i] = this.data[(this.front + i) % this.getCapacity()]
+      newData[i] = this.data[(this.front + i) % capacity]
     }
     this.data = newData
     this.front = 0
@@ -100,10 +105,11 @@ export class LoopQueue<T> implements Queue<T> {
       return
     }
     const ret = this.data[this.front]
+    const capacity = this.getCapacity()
     this.size--
     this.front = (this.front + 1) % this.data.length
-    if (this.size === this.getCapacity() / 4 && this.getCapacity() / 2 !== 0) {
-      this.resize(this.getCapacity() / 2)
+    if (this.size === capacity / 4 && capacity / 2 !== 0) {
+      this.resize(capacity / 2)
     }
     return ret
   }
@@ -125,6 +131,117 @@ export class LoopQueue<T> implements Queue<T> {
       }
     }
     res += '] tail'
+    return res
+  }
+}
+
+/** 栈实现队列 */
+export class StackQueue<T> implements Queue<T> {
+  private data: ArrayStack<T>
+
+  constructor() {
+    this.data = new ArrayStack<T>()
+  }
+
+  enqueue = (e: T) => {
+    this.data.push(e)
+  }
+
+  dequeue = () => {
+    const len = this.getSize()
+    const newStack = new ArrayStack<T>()
+    let currentItem: T | undefined
+    for (let i = 0; i < len; i++) {
+      currentItem = this.data.pop()
+      if (i < len - 1 && currentItem) {
+        newStack.push(currentItem)
+      }
+    }
+    this.data = newStack
+
+    return currentItem
+  }
+
+  getSize = () => {
+    return this.data.getSize()
+  }
+
+  isEmpty = () => {
+    return this.data.isEmpty()
+  }
+
+  getFront = () => {
+    const len = this.getSize()
+    const newStack = new ArrayStack<T>()
+    let currentItem: T | undefined
+    for (let i = 0; i < len; i++) {
+      currentItem = this.data.pop()
+      currentItem && newStack.push(currentItem)
+    }
+    this.data = newStack
+
+    return currentItem
+  }
+}
+
+/** 链表实现队列 */
+export class LinkedListQueue<T> implements Queue<T> {
+  head?: LinkedNode<T>
+  tail?: LinkedNode<T>
+  size: number
+
+  constructor() {
+    this.size = 0
+  }
+
+  getSize = () => {
+    return this.size
+  }
+
+  isEmpty = () => {
+    return this.size === 0
+  }
+
+  enqueue = (e: T) => {
+    if (!this.tail) {
+      this.tail = new LinkedNode(e)
+      this.head = this.tail
+    } else {
+      this.tail.next = new LinkedNode(e)
+      this.tail = this.tail.next
+    }
+    this.size++
+  }
+
+  dequeue = () => {
+    if (this.isEmpty()) {
+      return
+    }
+    let retNode = this.head
+    this.head = this.head?.next
+    retNode && (retNode.next = undefined)
+    if (!this.head) {
+      this.tail = undefined
+    }
+    this.size--
+    return retNode?.data
+  }
+
+  getFront = () => {
+    if (this.isEmpty()) {
+      return
+    }
+    return this.head?.data
+  }
+
+  toString = () => {
+    let res = 'Queue: front '
+    let current = this.head
+    while (current) {
+      res += current.data + '->'
+      current = current.next
+    }
+    res += 'NULL tail'
     return res
   }
 }
