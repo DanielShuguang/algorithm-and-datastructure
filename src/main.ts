@@ -1,17 +1,11 @@
-import { LinkedListQueue } from './data_structure/queue'
+import { BinaryTree } from './data_structure/binaryTree'
 
 function main() {
-  const queue = new LinkedListQueue<number>()
+  const tree = new BinaryTree()
+  const arr = [1, 2, 3, 4, 5, 6, 7]
+  tree.createByArray(arr)
 
-  for (let i = 0; i < 10; i++) {
-    queue.enqueue(i)
-    console.log(queue.toString())
-
-    if (i % 3 === 2) {
-      queue.dequeue()
-      console.log(queue.toString())
-    }
-  }
+  tree.frontShow()
 }
 
 main()
